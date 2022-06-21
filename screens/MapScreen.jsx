@@ -9,17 +9,16 @@ export default function MapScreen(){
     useEffect(() => {   fetchHotspots() }, []);
 
     const fetchHotspots = async () => {
-        console.log("Fetching hotspots");
         try {
             const res = await fetch("https://stud.hosted.hr.nl/0965152/websites/LiBrewRy/hotspots.json");
             const data = await res.json();
+            setHotspots(data);
         } catch (e) {
             console.error(e);
         }
     }
 
     const loadMarkers = () => {
-        console.log("loading markers")
         const markers = [];
         //loop through all hotspots
         hotspots.forEach((hotspot) => {
@@ -28,7 +27,6 @@ export default function MapScreen(){
                  markers.push(<Marker key={venue.venue} title={venue.venue} coordinate={venue.latLong}/>);
             });
         });
-        console.log(markers[0]);
         return markers
     }
 
