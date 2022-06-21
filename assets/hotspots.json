@@ -1,0 +1,260 @@
+[
+  {
+    "label": "Witte De With",
+    "latLong": {
+      "latitude": 51.915925469994704,
+      "longitude": 4.477762127342756
+    },
+    "venues": [
+      {
+        "venue": "Proeflokaal Reijngoud",
+        "latLong": {
+          "latitude": 51.91651799148462,
+          "longitude": 4.480254111998369
+        },
+        "beerList": {
+          "Pilsner": [
+            "Becks",
+            "Carlsberg",
+            "Stella Artois",
+            "Warsteiner"
+          ],
+          "Blond": [
+            "Barbar",
+            "Saison Dupont",
+            "Viven Blond",
+            "Lamme Goedzak"
+          ],
+          "Wit": [
+            "Vedett Extra White",
+            "ij wit",
+            "Schelde Brouwerij",
+            "Weihenstephaner Hefe Weissbier"
+          ],
+          "Dubbel": [
+            "Brugse Zot Dubbel",
+            "Gouden Carolus Classic",
+            "Kasteel Donker",
+            "Ramses Geile Bever"
+          ]
+        }
+      },
+      {
+        "venue": "Bierboutique",
+        "latLong": {
+          "latitude": 51.91576735273398,
+          "longitude": 4.477665713446169
+        },
+        "beerList": {
+          "Pilsner": [
+            "Sol",
+            "Desperados",
+            "Birra Moretti",
+            "Heineken"
+          ],
+          "Blond": [
+            "Barbar",
+            "Duvel",
+            "Brugse Zot",
+            "Delirium Tremens"
+          ],
+          "Wit": [
+            "Vedett Wit",
+            "Weihenstephaner Hefe Weissbier",
+            "Paulaner Hefe",
+            "Great White"
+          ],
+          "Dubbel": [
+            "Brugse Zot Dubbel",
+            "Gouden Carolus Classic",
+            "Kasteel Donker",
+            "Ramses Geile Bever"
+          ]
+        }
+      },
+      {
+        "venue": "Wunderbar",
+        "latLong": {
+          "latitude": 51.91586661891848,
+          "longitude": 4.47645335500504
+        },
+        "beerList": {
+          "Pilsner": [
+            "Becks",
+            "Carlsberg",
+            "Stella Artois",
+            "Warsteiner"
+          ],
+          "Blond": [
+            "Barbar",
+            "Saison Dupont",
+            "Viven Blond",
+            "Lamme Goedzak"
+          ],
+          "Wit": [
+            "Vedett Extra White",
+            "ij wit",
+            "Schelde Brouwerij",
+            "Weihenstephaner Hefe Weissbier"
+          ],
+          "Dubbel": [
+            "Brugse Zot Dubbel",
+            "Gouden Carolus Classic",
+            "Kasteel Donker",
+            "Ramses Geile Bever"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "label": "Nieuwe Binneweg",
+    "latLong": {
+      "latitude": 51.916845502842605,
+      "longitude": 4.471981284263011
+    },
+    "venues": [
+      {
+        "venue": "Stalles",
+        "latLong": {
+          "latitude": 51.916995068604265,
+          "longitude": 4.472031464585654
+        },
+        "beerList": {
+          "Pilsner": [
+            "Becks",
+            "Carlsberg",
+            "Stella Artois",
+            "Warsteiner"
+          ],
+          "Blond": [
+            "Barbar",
+            "Saison Dupont",
+            "Viven Blond",
+            "Lamme Goedzak"
+          ],
+          "Wit": [
+            "Vedett Extra White",
+            "ij wit",
+            "Schelde Brouwerij",
+            "Weihenstephaner Hefe Weissbier"
+          ],
+          "Dubbel": [
+            "Brugse Zot Dubbel",
+            "Gouden Carolus Classic",
+            "Kasteel Donker",
+            "Ramses Geile Bever"
+          ]
+        }
+      },
+      {
+        "venue": "Bar 3",
+        "latLong": {
+          "latitude": 51.91694295519456,
+          "longitude": 4.471847733273226
+        },
+        "beerList": {
+          "Pilsner": [
+            "Sol",
+            "Desperados",
+            "Birra Moretti",
+            "Heineken"
+          ],
+          "Blond": [
+            "Barbar",
+            "Duvel",
+            "Brugse Zot",
+            "Delirium Tremens"
+          ],
+          "Wit": [
+            "Vedett Wit",
+            "Weihenstephaner Hefe Weissbier",
+            "Paulaner Hefe",
+            "Great White"
+          ],
+          "Dubbel": [
+            "Brugse Zot Dubbel",
+            "Gouden Carolus Classic",
+            "Kasteel Donker",
+            "Ramses Geile Bever"
+          ]
+        }
+      },
+      {
+        "venue": "Rotown",
+        "latLong": {
+          "latitude": 51.91690986728398,
+          "longitude": 4.471704235094905
+        },
+        "beerList": {
+          "Pilsner": [
+            "Becks",
+            "Carlsberg",
+            "Stella Artois",
+            "Warsteiner"
+          ],
+          "Blond": [
+            "Barbar",
+            "Saison Dupont",
+            "Viven Blond",
+            "Lamme Goedzak"
+          ],
+          "Wit": [
+            "Vedett Extra White",
+            "ij wit",
+            "Schelde Brouwerij",
+            "Weihenstephaner Hefe Weissbier"
+          ],
+          "Dubbel": [
+            "Brugse Zot Dubbel",
+            "Gouden Carolus Classic",
+            "Kasteel Donker",
+            "Ramses Geile Bever"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "label": "Hofplein",
+    "latLong": {
+      "latitude": 51.92439762251367,
+      "longitude": 4.477750216153352
+    },
+    "venues": [
+      {
+        "venue": "Biergarten",
+        "latLong": {
+          "latitude": 51.925526133490415,
+          "longitude": 4.4762941350432435
+        },
+        "beerList": {
+          "Pilsner": [
+            "Becks",
+            "Carlsberg",
+            "Stella Artois",
+            "Warsteiner"
+          ],
+          "Blond": [
+            "Barbar",
+            "Saison Dupont",
+            "Viven Blond",
+            "Lamme Goedzak"
+          ],
+          "Wit": [
+            "Vedett Extra White",
+            "ij wit",
+            "Schelde Brouwerij",
+            "Weihenstephaner Hefe Weissbier"
+          ],
+          "Dubbel": [
+            "Brugse Zot Dubbel",
+            "Gouden Carolus Classic",
+            "Kasteel Donker",
+            "Ramses Geile Bever"
+          ]
+        }
+      }
+    ]
+  }
+]
