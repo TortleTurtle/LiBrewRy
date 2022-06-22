@@ -1,10 +1,23 @@
 import {useEffect, useState} from "react";
 import {SectionList, Text, View, StyleSheet} from "react-native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack"
+import Detail from "./Detail.jsx";
 
 export default function List(){
+    const Stack = createNativeStackNavigator();
+
+    return(
+        <Stack.Navigator initialRouteName="ListScreen">
+            <Stack.Screen name="ListScreen" component={ListScreen} options={{title: "List"}}/>
+            <Stack.Screen name="Detail" component={Detail}/>
+        </Stack.Navigator>
+    )
+}
+
+function ListScreen({navigation}){
     const [hotspots, setHotspots] = useState([]);
 
-    useEffect(() => {   fetchHotspots() }, []);
+    useEffect(() => { fetchHotspots() }, []);
 
     const fetchHotspots = async () => {
         try {
@@ -15,7 +28,6 @@ export default function List(){
             console.error(e);
         }
     }
-
     const getList = () => {
         /*Create an array holding title and data for a Section list.*/
         const hotspotList = []
@@ -30,7 +42,8 @@ export default function List(){
         <View style={styles.container}>
             <SectionList
                 sections={getList()}
-                renderItem={({item}) => <Text style={styles.item}>{item.venue}</Text>}
+                renderItem={
+                ({item}) => <Text style={styles.item} onPress={() => {navigation.navigate("Detail", item)}} >{item.venue}</Text>}
                 renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
