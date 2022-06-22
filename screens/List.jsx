@@ -4,13 +4,13 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack"
 import Detail from "./Detail.jsx";
 
 export default function List(){
-    const Stack = createNativeStackNavigator();
+    const ListStack = createNativeStackNavigator();
 
     return(
-        <Stack.Navigator initialRouteName="ListScreen">
-            <Stack.Screen name="ListScreen" component={ListScreen} options={{title: "List"}}/>
-            <Stack.Screen name="Detail" component={Detail}/>
-        </Stack.Navigator>
+        <ListStack.Navigator initialRouteName="ListScreen">
+            <ListStack.Screen name="ListScreen" component={ListScreen} options={{title: "List"}}/>
+            <ListStack.Screen name="Detail" component={Detail}/>
+        </ListStack.Navigator>
     )
 }
 
@@ -28,13 +28,15 @@ function ListScreen({navigation}){
             console.error(e);
         }
     }
+    /*Returns an array holding objects that contain the title and data for a Section list.*/
     const getList = () => {
-        /*Create an array holding title and data for a Section list.*/
         const hotspotList = []
         //loop through all hotspots
         hotspots.map((hotspot) => {
+            //push object holding title and date into hotspotList array.
             hotspotList.push({title: hotspot.label, data: hotspot.venues})
         });
+
         return hotspotList;
     }
 

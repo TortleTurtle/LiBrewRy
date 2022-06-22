@@ -1,9 +1,22 @@
-import {Dimensions, Text, View, StyleSheet} from "react-native";
+import {Dimensions, View, StyleSheet} from "react-native";
 import MapView, {Marker} from "react-native-maps";
 import {useEffect, useState} from "react";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import Detail from "./Detail.jsx";
 
 
-export default function MapScreen(){
+export default function Map(){
+    const MapStack = createNativeStackNavigator();
+
+    return(
+        <MapStack.Navigator initialRouteName="MapScreen">
+            <MapStack.Screen name="MapScreen" component={MapScreen} options={{title: "Map"}}/>
+            <MapStack.Screen name="Detail" component={Detail}/>
+        </MapStack.Navigator>
+    )
+}
+
+function MapScreen({navigation}){
     const [hotspots, setHotspots] = useState([]);
 
     useEffect(() => {   fetchHotspots() }, []);
@@ -18,16 +31,18 @@ export default function MapScreen(){
         }
     }
 
-    const loadMarkers = () => {
-        const markers = [];
+    //puts all venues in one array to create markers with them
+    const getVenues = () => {
+        const venues = [];
         //loop through all hotspots
         hotspots.forEach((hotspot) => {
         //then loop through all venues
-            hotspot.venues.forEach((venue, i) => {
-                 markers.push(<Marker key={venue.venue} title={venue.venue} coordinate={venue.latLong}/>);
+            hotspot.venues.forEach((venue) => {
+                //push the venue into the venues array
+                venues.push(venue);
             });
         });
-        return markers
+        return venues
     }
 
     return(
@@ -41,46 +56,9 @@ export default function MapScreen(){
             }}
                      showsPointsOfInterest={false}
                      //Hide POI for Android.
-                     customMapStyle={[
-                 {
-                     "featureType": "administrative.land_parcel",
-                     "elementType": "labels",
-                     "stylers": [
-                         {
-                             "visibility": "off"
-                         }
-                     ]
-                 },
-                 {
-                     "featureType": "poi.business",
-                     "stylers": [
-                         {
-                             "visibility": "off"
-                         }
-                     ]
-                 },
-                 {
-                     "featureType": "poi.park",
-                     "elementType": "labels.text",
-                     "stylers": [
-                         {
-                             "visibility": "off"
-                         }
-                     ]
-                 },
-                 {
-                     "featureType": "road.local",
-                     "elementType": "labels",
-                     "stylers": [
-                         {
-                             "visibility": "off"
-                         }
-                     ]
-                 }
-             ]}
+                     customMapStyle={hideAndroidPOI}
             >
-                {/*TODO: On marker click go to a detail screen*/}
-                {loadMarkers().map((marker) => { return marker})}
+                {getVenues().map((venue, index) => { return <Marker onCalloutPress={() => {navigation.navigate("Detail", venue)}} key={index} title={venue.venue} coordinate={venue.latLong}/>})}
             </MapView>
         </View>
     )
@@ -97,3 +75,41 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height,
     },
 });
+
+const hideAndroidPOI = [
+    {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    }
+]
