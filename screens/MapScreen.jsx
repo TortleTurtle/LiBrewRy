@@ -1,8 +1,9 @@
 import {Dimensions, View, StyleSheet} from "react-native";
 import MapView, {Marker} from "react-native-maps";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Detail from "./Detail.jsx";
+import {ContentContext} from "../providers/ContentProvider.jsx";
 
 
 export default function Map(){
@@ -17,23 +18,12 @@ export default function Map(){
 }
 
 function MapScreen({navigation}){
-    const [hotspots, setHotspots] = useState([]);
-
-    useEffect(() => {   fetchHotspots() }, []);
-
-    const fetchHotspots = async () => {
-        try {
-            const res = await fetch("https://stud.hosted.hr.nl/0965152/websites/LiBrewRy/hotspots.json");
-            const data = await res.json();
-            setHotspots(data);
-        } catch (e) {
-            console.error(e);
-        }
-    }
+    const hotspots = useContext(ContentContext);
 
     //puts all venues in one array to create markers with them
     const getVenues = () => {
         const venues = [];
+
         //loop through all hotspots
         hotspots.forEach((hotspot) => {
         //then loop through all venues

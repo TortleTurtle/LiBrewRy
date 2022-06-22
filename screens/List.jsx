@@ -1,7 +1,8 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import {SectionList, Text, View, StyleSheet} from "react-native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 import Detail from "./Detail.jsx";
+import {ContentContext} from "../providers/ContentProvider.jsx";
 
 export default function List(){
     const ListStack = createNativeStackNavigator();
@@ -15,19 +16,7 @@ export default function List(){
 }
 
 function ListScreen({navigation}){
-    const [hotspots, setHotspots] = useState([]);
-
-    useEffect(() => { fetchHotspots() }, []);
-
-    const fetchHotspots = async () => {
-        try {
-            const res = await fetch("https://stud.hosted.hr.nl/0965152/websites/LiBrewRy/hotspots.json");
-            const data = await res.json();
-            setHotspots(data);
-        } catch (e) {
-            console.error(e);
-        }
-    }
+    const hotspots = useContext(ContentContext);
     /*Returns an array holding objects that contain the title and data for a Section list.*/
     const getList = () => {
         const hotspotList = []
