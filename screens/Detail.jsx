@@ -1,12 +1,12 @@
 import {Text, View, StyleSheet, SectionList} from "react-native";
+import {useEffect} from "react";
 
 export default function Detail({route, navigation}){
-
     const venue = route.params;
+    useEffect(() => {navigation.setOptions({title: venue.venue})})
     /*Create an array holding title and data for a Section list.*/
     const getList = () => {
         const beerList = [];
-        console.log(venue.beerList);
         //Get the keys to all categories in venue.beerList.
         const categories = Object.keys(venue.beerList);
 
@@ -18,9 +18,10 @@ export default function Detail({route, navigation}){
         return beerList;
     }
 
+    //TODO: Rate the venue and store it.
+
     return(
         <View>
-            <Text>{venue.venue}</Text>
             <SectionList
                 sections={getList()}
                 renderItem={({item}) => <Text style={styles.item}>{item}</Text>}

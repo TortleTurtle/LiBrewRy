@@ -34,7 +34,16 @@ function ListScreen({navigation}){
             <SectionList
                 sections={getList()}
                 renderItem={
-                ({item}) => <Text style={styles.item} onPress={() => {navigation.navigate("Detail", item)}} >{item.venue}</Text>}
+                ({item}) =>
+                    <Text style={styles.item}
+                          onPress={() => {navigation.navigate("Detail", item)}}
+
+                          //We're in a nested navigator so need to get the parent navigator.
+                          //Then from the parent navigator we must pass params to the nested navigator in Map to open MapScreen.
+                          onLongPress={() => {navigation.getParent().navigate("Map", {screen: "MapScreen", params: item.latLong})}}
+                    >
+                        {item.venue}
+                    </Text>}
                 renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />

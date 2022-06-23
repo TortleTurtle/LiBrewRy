@@ -6,22 +6,13 @@ export const ContentContext = React.createContext();
 
 export function ContentProvider({children}) {
     const [content, setContent] = useState({});
-    useEffect(() => {fetchContent(); testStorage();}, []);
+    useEffect(() => {fetchContent()}, []);
 
     const fetchContent = async () => {
         try {
             const res = await fetch("https://stud.hosted.hr.nl/0965152/websites/LiBrewRy/hotspots.json");
-            const data = await res.json();
-            setContent(data);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    const storeHotspot = async (key, hotspot) => {
-        try {
-            const json = JSON.stringify(hotspot);
-            await AsyncStorage.setItem(key, json);
+            const hotspots = await res.json();
+            setContent(hotspots);
         } catch (e) {
             console.error(e);
         }
