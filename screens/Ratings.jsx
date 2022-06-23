@@ -8,7 +8,10 @@ export default function Ratings({navigation}) {
     const [starRatings, setStarRatings] = useState(null);
     const ratingOptions = [ 1, 2, 3, 4, 5];
 
-    useEffect(() => {getStoredRatings()},[]);
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+            getStoredRatings();
+        })},[]);
     const hotspots = useContext(ContentContext);
 
     const getStoredRatings = async () => {
