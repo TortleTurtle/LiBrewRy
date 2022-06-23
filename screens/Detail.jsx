@@ -1,9 +1,18 @@
 import {Text, View, StyleSheet, SectionList} from "react-native";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function Detail({route, navigation}){
+    const [starRating, setStarRating] = useState(null);
+    const ratingOptions = [1, 2, 3, 4, 5];
     const venue = route.params;
-    useEffect(() => {navigation.setOptions({title: venue.venue})})
+
+    useEffect(() => {
+        navigation.setOptions({title: venue.venue});
+        getRating();
+    }, []);
+
     /*Create an array holding title and data for a Section list.*/
     const getList = () => {
         const beerList = [];
@@ -18,10 +27,36 @@ export default function Detail({route, navigation}){
         return beerList;
     }
 
-    //TODO: Rate the venue and store it.
+    const setRating = async (newRating) => {
+        const json = JSON.stringify(newRating);
+        try {
+            await AsyncStorage.setItem(venue.venue, json);
+            setStarRating(newRating);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    const getRating = async () => {
+        try {
+            const json = await AsyncStorage.getItem(venue.venue);
+            setStarRating(json != null ? JSON.parse(json) : 0);
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
     return(
         <View>
+            <View style={styles.stars}>
+                {ratingOptions.map((option) => (
+                    <Ionicons name={ option <= starRating ? "ios-star" : "star-outline"}
+                              onPress={() => setRating(option)}
+                              style={option <= starRating ? styles.starSelected : styles.starUnselected}
+                              key={option}
+                              size={32}
+                    />
+                ))}
+            </View>
             <SectionList
                 sections={getList()}
                 renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
@@ -36,6 +71,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 22
+    },
+    stars: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        padding: 20
+    },
+    starUnselected:{
+        color: '#aaa'
+    },
+    starSelected:{
+        color: `#ffb300`
     },
     sectionHeader: {
         paddingTop: 2,
