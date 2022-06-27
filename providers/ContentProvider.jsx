@@ -1,12 +1,13 @@
-import React, {useContext, useState, useEffect} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {createContext, useEffect, useState} from "react";
 import {Text} from "react-native";
 
-export const ContentContext = React.createContext();
+export const ContentContext = createContext();
 
 export function ContentProvider({children}) {
     const [content, setContent] = useState({});
-    useEffect(() => {fetchContent()}, []);
+    useEffect(() => {
+        fetchContent()
+    }, []);
 
     const fetchContent = async () => {
         try {
@@ -18,10 +19,10 @@ export function ContentProvider({children}) {
         }
     }
 
-    return(
+    return (
         <ContentContext.Provider value={content}>
             {/*Check if content has been fetched before mounting child components*/}
-            { Object.keys(content).length > 0 ? children : <Text>Loading</Text>}
+            {Object.keys(content).length > 0 ? children : <Text>Loading</Text>}
         </ContentContext.Provider>
     )
 }

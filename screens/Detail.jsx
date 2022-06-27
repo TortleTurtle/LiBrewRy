@@ -1,12 +1,14 @@
-import {Text, View, StyleSheet, SectionList} from "react-native";
+import {SectionList, Text, View} from "react-native";
 import {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import {useStyle} from "../providers/StyleProvider.jsx";
 
-export default function Detail({route, navigation}){
+export default function Detail({route, navigation}) {
     const [starRating, setStarRating] = useState(null);
     const ratingOptions = [1, 2, 3, 4, 5];
     const venue = route.params;
+    const {styleSheet} = useStyle();
 
     useEffect(() => {
         navigation.setOptions({title: venue.venue});
@@ -45,13 +47,13 @@ export default function Detail({route, navigation}){
         }
     }
 
-    return(
-        <View>
-            <View style={styles.stars}>
+    return (
+        <View style={styleSheet.container}>
+            <View style={styleSheet.bigStarContainer}>
                 {ratingOptions.map((option) => (
-                    <Ionicons name={ option <= starRating ? "ios-star" : "star-outline"}
+                    <Ionicons name={option <= starRating ? "ios-star" : "star-outline"}
                               onPress={() => setRating(option)}
-                              style={option <= starRating ? styles.starSelected : styles.starUnselected}
+                              style={option <= starRating ? styleSheet.starSelected : styleSheet.starUnselected}
                               key={option}
                               size={32}
                     />
@@ -59,43 +61,10 @@ export default function Detail({route, navigation}){
             </View>
             <SectionList
                 sections={getList()}
-                renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-                renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                renderItem={({item}) => <Text style={styleSheet.item}>{item}</Text>}
+                renderSectionHeader={({section}) => <Text style={styleSheet.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    },
-    stars: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        padding: 20
-    },
-    starUnselected:{
-        color: '#aaa'
-    },
-    starSelected:{
-        color: `#ffb300`
-    },
-    sectionHeader: {
-        paddingTop: 2,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 2,
-        fontSize: 14,
-        fontWeight: 'bold',
-        backgroundColor: 'rgba(247,247,247,1.0)',
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
-})

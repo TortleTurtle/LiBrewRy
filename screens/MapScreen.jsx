@@ -1,15 +1,21 @@
-import {Dimensions, View, StyleSheet} from "react-native";
+import {Dimensions, StyleSheet, View} from "react-native";
 import MapView, {Marker} from "react-native-maps";
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Detail from "./Detail.jsx";
 import {ContentContext} from "../providers/ContentProvider.jsx";
+import {useStyle} from "../providers/StyleProvider.jsx";
+import * as Location from "expo-location"
 
 
-export default function Map({route}){
+export default function Map({route}) {
     const MapStack = createNativeStackNavigator();
-    return(
-        <MapStack.Navigator initialRouteName="MapScreen">
+    const {navStyle} = useStyle();
+    return (
+        <MapStack.Navigator initialRouteName="MapScreen" screenOptions={{
+            headerStyle: navStyle.headerStyle,
+            headerTintColor: navStyle.headerTintColor
+        }}>
             <MapStack.Screen name="MapScreen" component={MapScreen} options={{title: "Map"}} initialParams={{
                 latitude: 51.915925469994704,
                 longitude: 4.477762127342756
@@ -19,7 +25,7 @@ export default function Map({route}){
     )
 }
 
-function MapScreen({route, navigation}){
+function MapScreen({route, navigation}) {
     const hotspots = useContext(ContentContext);
 
     //puts all venues in one array to create markers with them
@@ -28,7 +34,7 @@ function MapScreen({route, navigation}){
 
         //loop through all hotspots
         hotspots.forEach((hotspot) => {
-        //then loop through all venues
+            //then loop through all venues
             hotspot.venues.forEach((venue) => {
                 //push the venue into the venues array
                 venues.push(venue);
@@ -37,8 +43,9 @@ function MapScreen({route, navigation}){
         return venues
     }
 
-    return(
+    return (
         <View style={styles.container}>
+            <Button title="Center"/>
             <MapView style={styles.map}
                      region={{
                          latitude: route.params.latitude,
@@ -47,15 +54,18 @@ function MapScreen({route, navigation}){
                          longitudeDelta: 0.005
                      }}
                      showsPointsOfInterest={false}
-                     //Hide POI for Android.
+                //Hide POI for Android.
                      customMapStyle={hideAndroidPOI}
+                     showsUserLocation={true}
             >
                 {getVenues().map((venue, index) => {
                     return (
-                        <Marker onCalloutPress={() => {navigation.navigate("Detail", venue)}}
-                                   key={index}
-                                   title={venue.venue}
-                                   coordinate={venue.latLong}
+                        <Marker onCalloutPress={() => {
+                            navigation.navigate("Detail", venue)
+                        }}
+                                key={index}
+                                title={venue.venue}
+                                coordinate={venue.latLong}
                         />
                     )
                 })}

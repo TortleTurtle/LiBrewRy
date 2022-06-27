@@ -1,21 +1,24 @@
 import {useContext, useEffect, useState} from "react";
-import {FlatList, StyleSheet, Text, View} from "react-native";
+import {FlatList, Text, View} from "react-native";
 import {ContentContext} from "../providers/ContentProvider.jsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import {StyleContext, useStyle} from "../providers/StyleProvider.jsx";
 
 export default function Ratings({navigation}) {
     const [starRatings, setStarRatings] = useState(null);
-    const ratingOptions = [ 1, 2, 3, 4, 5];
+    const ratingOptions = [1, 2, 3, 4, 5];
+    const {styleSheet} = useStyle();
 
     useEffect(() => {
         navigation.addListener('focus', () => {
             getStoredRatings();
-        })},[]);
+        })
+    }, []);
     const hotspots = useContext(ContentContext);
 
     const getStoredRatings = async () => {
-        try{
+        try {
             //Get all keys using AsyncStorage.getAllKeys().
             const keys = await AsyncStorage.getAllKeys();
             //Use keys to request all stored ratings.
@@ -51,16 +54,21 @@ export default function Ratings({navigation}) {
         return latLong ? latLong : null;
     }
     return (
-        <View style={styles.container}>
+        <View style={styleSheet.container}>
             <FlatList data={starRatings}
                       renderItem={({item}) =>
-                          <View style={styles.item}>
-                              <Text onLongPress={() => {navigation.navigate("Map", {screen: "MapScreen", params: findLatLong(item.venue)})}}>{item.venue}</Text>
-                              <View style={styles.stars}>
+                          <View style={styleSheet.item}>
+                              <Text
+                                  onLongPress={() => {
+                                      navigation.navigate("Map", {screen: "MapScreen", params: findLatLong(item.venue)})
+                                  }}
+                                  style={styleSheet.itemText}
+                              >{item.venue}</Text>
+                              <View style={styleSheet.smallStarContainer}>
                                   {ratingOptions.map((option) => (
                                       <Ionicons
                                           name={option <= item.rating ? "ios-star" : "star-outline"}
-                                          style={option <= item.rating ? styles.starSelected : styles.starUnselected}
+                                          style={option <= item.rating ? styleSheet.starSelected : styleSheet.starUnselected}
                                           size={32}
                                           key={option}
                                       />
@@ -72,27 +80,3 @@ export default function Ratings({navigation}) {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    },
-    item: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 10,
-        fontSize: 18,
-    },
-    stars: {
-        display: "flex",
-        flexDirection: "row",
-    },
-    starUnselected:{
-        color: '#aaa'
-    },
-    starSelected:{
-        color: `#ffb300`
-    },
-});

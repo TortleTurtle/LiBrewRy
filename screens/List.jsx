@@ -1,22 +1,29 @@
-import {useEffect, useState, useContext} from "react";
-import {SectionList, Text, View, StyleSheet} from "react-native";
+import {useContext} from "react";
+import {SectionList, Text, View} from "react-native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 import Detail from "./Detail.jsx";
 import {ContentContext} from "../providers/ContentProvider.jsx";
+import {useStyle} from "../providers/StyleProvider.jsx";
 
-export default function List(){
+
+export default function List() {
     const ListStack = createNativeStackNavigator();
+    const {navStyle} = useStyle();
 
-    return(
-        <ListStack.Navigator initialRouteName="ListScreen">
+    return (
+        <ListStack.Navigator initialRouteName="ListScreen" screenOptions={{
+            headerStyle: navStyle.headerStyle,
+            headerTintColor: navStyle.headerTintColor
+        }}>
             <ListStack.Screen name="ListScreen" component={ListScreen} options={{title: "List"}}/>
             <ListStack.Screen name="Detail" component={Detail}/>
         </ListStack.Navigator>
     )
 }
 
-function ListScreen({navigation}){
+function ListScreen({navigation}) {
     const hotspots = useContext(ContentContext);
+    const {styleSheet} = useStyle();
     /*Returns an array holding objects that contain the title and data for a Section list.*/
     const getList = () => {
         const hotspotList = []
@@ -29,45 +36,33 @@ function ListScreen({navigation}){
         return hotspotList;
     }
 
-    return(
-        <View style={styles.container}>
+    return (
+        <View style={styleSheet.container}>
             <SectionList
                 sections={getList()}
                 renderItem={
-                ({item}) =>
-                    <Text style={styles.item}
-                          onPress={() => {navigation.navigate("Detail", item)}}
+                    ({item}) =>
+                        <View style={styleSheet.item}>
+                            <Text style={styleSheet.itemText}
+                                  onPress={() => {
+                                      navigation.navigate("Detail", item)
+                                  }}
 
-                          //We're in a nested navigator so need to get the parent navigator.
-                          //Then from the parent navigator we must pass params to the nested navigator in Map to open MapScreen.
-                          onLongPress={() => {navigation.getParent().navigate("Map", {screen: "MapScreen", params: item.latLong})}}
-                    >
-                        {item.venue}
-                    </Text>}
-                renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                                //We're in a nested navigator so need to get the parent navigator.
+                                //Then from the parent navigator we must pass params to the nested navigator in Map to open MapScreen.
+                                  onLongPress={() => {
+                                      navigation.getParent().navigate("Map", {
+                                          screen: "MapScreen",
+                                          params: item.latLong
+                                      })
+                                  }}
+                            >
+                                {item.venue}
+                            </Text>
+                        </View>}
+                renderSectionHeader={({section}) => <Text style={styleSheet.sectionHeader}>{section.title}</Text>}
                 keyExtractor={(item, index) => index}
             />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    },
-    sectionHeader: {
-        paddingTop: 2,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 2,
-        fontSize: 14,
-        fontWeight: 'bold',
-        backgroundColor: 'rgba(247,247,247,1.0)',
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
-})
