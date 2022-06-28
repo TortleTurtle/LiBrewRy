@@ -21,7 +21,8 @@ export function ContentProvider({children}) {
 
     return (
         <ContentContext.Provider value={content}>
-            {/*Check if content has been fetched before mounting child components*/}
+            {/*Check if content has been fetched before mounting child components
+            otherwise an undefined error will occur.*/}
             {Object.keys(content).length > 0 ? children : <Text>Loading</Text>}
         </ContentContext.Provider>
     )

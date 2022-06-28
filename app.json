@@ -18,7 +18,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationAlwaysUsageDescription": "Needed to send push notifications to users when near veneus that overlap with their criteria. Also needed to show their location on the map."
+      }
     },
     "android": {
       "adaptiveIcon": {

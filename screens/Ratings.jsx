@@ -23,7 +23,7 @@ export default function Ratings({navigation}) {
             const keys = await AsyncStorage.getAllKeys();
             //Use keys to request all stored ratings.
             const storedRatings = await AsyncStorage.multiGet(keys);
-            //res array consists of [['key', 'value']]. Value needs to be parsed.
+            //res array consists of ['key', 'value']. Value needs to be parsed.
             const parsedRatings = storedRatings.map((keyValue) => {
                 return {
                     venue: keyValue[0],
@@ -59,6 +59,9 @@ export default function Ratings({navigation}) {
                       renderItem={({item}) =>
                           <View style={styleSheet.item}>
                               <Text
+                                  onPress={() => {
+                                      navigation.navigate("List", {screen: "Detail"})
+                                  }}
                                   onLongPress={() => {
                                       navigation.navigate("Map", {screen: "MapScreen", params: findLatLong(item.venue)})
                                   }}

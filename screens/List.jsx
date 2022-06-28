@@ -49,7 +49,7 @@ function ListScreen({navigation}) {
                                   }}
 
                                 //We're in a nested navigator so need to get the parent navigator.
-                                //Then from the parent navigator we must pass params to the nested navigator in Map to open MapScreen.
+                                //Then from the parent navigator we must pass params to nested navigator in Map.
                                   onLongPress={() => {
                                       navigation.getParent().navigate("Map", {
                                           screen: "MapScreen",

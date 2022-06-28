@@ -12,17 +12,6 @@ export default function App() {
 
     const Tab = createBottomTabNavigator();
 
-    useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status === 'granted') {
-                console.log("Permission was granted");
-            } else {
-                console.log("Permission was not granted");
-            }
-        })();
-    }, []);
-
     return (
         <ContentProvider>
             <StyleProvider>

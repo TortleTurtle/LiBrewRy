@@ -1,11 +1,11 @@
-import {Dimensions, StyleSheet, View} from "react-native";
+import {Button, Dimensions, StyleSheet, View} from "react-native";
 import MapView, {Marker} from "react-native-maps";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Detail from "./Detail.jsx";
 import {ContentContext} from "../providers/ContentProvider.jsx";
 import {useStyle} from "../providers/StyleProvider.jsx";
-import * as Location from "expo-location"
+import * as Location from "expo-location";
 
 
 export default function Map({route}) {
@@ -16,10 +16,7 @@ export default function Map({route}) {
             headerStyle: navStyle.headerStyle,
             headerTintColor: navStyle.headerTintColor
         }}>
-            <MapStack.Screen name="MapScreen" component={MapScreen} options={{title: "Map"}} initialParams={{
-                latitude: 51.915925469994704,
-                longitude: 4.477762127342756
-            }}/>
+            <MapStack.Screen name="MapScreen" component={MapScreen} options={{title: "Map"}}/>
             <MapStack.Screen name="Detail" component={Detail}/>
         </MapStack.Navigator>
     )
@@ -27,6 +24,11 @@ export default function Map({route}) {
 
 function MapScreen({route, navigation}) {
     const hotspots = useContext(ContentContext);
+
+    //useEffect to get users permission to use location.
+    useEffect(() => {
+        requestPermission();
+    }, []);
 
     //puts all venues in one array to create markers with them
     const getVenues = () => {
@@ -43,13 +45,24 @@ function MapScreen({route, navigation}) {
         return venues
     }
 
+    const requestPermission = async () => {
+        await Location.requestForegroundPermissionsAsync();
+    };
+
+    const getLocation = async () => {
+        const location = await Location.getCurrentPositionAsync({});
+        navigation.setParams({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+        });
+    }
+
     return (
         <View style={styles.container}>
-            <Button title="Center"/>
             <MapView style={styles.map}
                      region={{
-                         latitude: route.params.latitude,
-                         longitude: route.params.longitude,
+                         latitude: route.params ? route.params.latitude : 51.915925469994704,
+                         longitude: route.params ? route.params.longitude : 4.477762127342756,
                          latitudeDelta: 0.005,
                          longitudeDelta: 0.005
                      }}
@@ -84,6 +97,7 @@ const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
+        zIndex: 1
     },
 });
 
